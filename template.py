@@ -27,15 +27,10 @@ template = Template(
     dependencies=Dependencies(
         runTime=RunTimeDeps(
             externals={
-                "@youwol/vsf-core": "^0.1.0",
+                "@youwol/vsf-core": "^0.1.2",
                 "rxjs": "^6.5.5",
             }
-        ),
-        devTime={
-            # `ts-essentials` is used to help the `Immutable` type definition.
-            # It should be removed ASAP when `@youwol/vsf-core` ship it as dependencies.
-            "ts-essentials": "^9.3.1",
-        },
+        )
     ),
     bundles=Bundles(
         mainModule=MainModule(
