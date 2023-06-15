@@ -1113,11 +1113,13 @@
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
-"@youwol/cdn-client@^1.0.2":
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/@youwol/cdn-client/-/cdn-client-1.0.10.tgz#2e240601625f3fe6d95a69f951c35cbd673f21ff"
-  integrity sha512-tUYFztmQ6kztkm1HBl7Qq0Fxbt5iuLuc9j+x9FXhti79UKN8121tBhLdG49hnlQcIIPw54UI4GOK2ggrDQcCWQ==
+"@youwol/cdn-client@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@youwol/cdn-client/-/cdn-client-2.0.4.tgz#e09318845ff38d7a83114104fadd0e3b2f83f23d"
+  integrity sha512-GlJ+TZzjvL7JNwuT2jTos2YLrP4jRFqgScV9ctOOWagSqZvbwnxAcMC6YSVprd3bZdQ2nLGZ1u9R5P9OTeFZvg==
   dependencies:
+    "@youwol/flux-view" "^1.1.0"
+    rxjs "^6.5.5"
     semver "^7.3.4"
 
 "@youwol/eslint-config@^0.1.0":
@@ -1135,7 +1137,7 @@
     eslint-plugin-tsdoc "^0.2.17"
     eslint-plugin-unused-imports "^2.0.0"
 
-"@youwol/flux-view@^1.0.3":
+"@youwol/flux-view@^1.0.3", "@youwol/flux-view@^1.1.0":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@youwol/flux-view/-/flux-view-1.1.1.tgz#66c41672b913b99ace5ce6e70d05ad6a9daea579"
   integrity sha512-/EWXYnRRpRI5BMu9IRcwqPJmlf9MZQMS6FaRp3yCzr9RAxhuAbvSZUDN18OJGg3hUvUtRTmQOUWtfQaVypH8Tg==
@@ -1162,10 +1164,14 @@
     jest-junit "^15.0.0"
     ts-jest "^29.0.5"
 
-"@youwol/logging@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@youwol/logging/-/logging-0.1.0.tgz#c5610afdc67ca1e86847ea6e6014574dfd2bee75"
-  integrity sha512-qmajvnb3x4Ad8VkmYbW+UCLn39y0NwOkg7AQPnp6YSUGcAeuJq2Ut11ZNX3tJZJXpYYR8d4IMIq/p5rcsa39BA==
+"@youwol/logging@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@youwol/logging/-/logging-0.1.1.tgz#98e2c54e27ffe0693be6003a69704910a9e1ee57"
+  integrity sha512-QMkiV0+FVUcd33Aq45L5m8qJzfMd6XS/dt/gnbVSAPyGpHf9aaezvumDxBkTwdNz19RtD0l6RA9qduKZ4eGd9w==
+  dependencies:
+    "@youwol/flux-view" "^1.1.0"
+    "@youwol/fv-tree" "^0.2.3"
+    rxjs "^6.5.5"
 
 "@youwol/prettier-config@^0.1.0":
   version "0.1.0"
@@ -1185,16 +1191,16 @@
     ts-node "^10.9.1"
     typescript "^4.9.5"
 
-"@youwol/vsf-core@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@youwol/vsf-core/-/vsf-core-0.1.0.tgz#15a87144e7a20c9229000ba92ad3fc25fc29f573"
-  integrity sha512-5RN9ZzC55iocnJQVTlhQiOf14Khb7xjdOluCtdwgExlREmzZEuY5iXIYRKkv9kfVYNZEV8aCe8Anq02MtPZmaQ==
+"@youwol/vsf-core@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@youwol/vsf-core/-/vsf-core-0.1.2.tgz#e7999c0838670a48107ff401d95bc8badb589d02"
+  integrity sha512-YxsyhseaL4AB+guBRN7NKzGSEX/O84sX4DU9gOy8ZL3ltsoeQlZLAMx5EIROWB6RRsEJjU5/Thdw+Me0C+Zx6w==
   dependencies:
-    "@youwol/cdn-client" "^1.0.2"
+    "@youwol/cdn-client" "^2.0.4"
     "@youwol/fv-tree" "^0.2.3"
-    "@youwol/logging" "^0.1.0"
+    "@youwol/logging" "^0.1.1"
     rxjs "^6.5.5"
-    three "^0.152.0"
+    ts-essentials "^9.3.1"
 
 abab@^2.0.6:
   version "2.0.6"
@@ -4381,11 +4387,6 @@ text-table@^0.2.0:
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==
 
-three@^0.152.0:
-  version "0.152.2"
-  resolved "https://registry.yarnpkg.com/three/-/three-0.152.2.tgz#2ee0f2c504d31a4bc29b45495c12bded9fda7bfc"
-  integrity sha512-Ff9zIpSfkkqcBcpdiFo2f35vA9ZucO+N8TNacJOqaEE6DrB0eufItVMib8bK8Pcju/ZNT6a7blE1GhTpkdsILw==
-
 tmpl@1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/tmpl/-/tmpl-1.0.5.tgz#8683e0b902bb9c20c4f726e3c0b69f36518c07cc"
@@ -4434,6 +4435,11 @@ trim-newlines@^4.0.2:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/trim-newlines/-/trim-newlines-4.1.1.tgz#28c88deb50ed10c7ba6dc2474421904a00139125"
   integrity sha512-jRKj0n0jXWo6kh62nA5TEh3+4igKDXLvzBJcPpiizP7oOolUrYIxmVBG9TOtHYFHoddUk6YvAkGeGoSVTXfQXQ==
+
+ts-essentials@^9.3.1:
+  version "9.3.2"
+  resolved "https://registry.yarnpkg.com/ts-essentials/-/ts-essentials-9.3.2.tgz#5f4ae6d24e20d042a033316c0592dbb51d1b273f"
+  integrity sha512-JxKJzuWqH1MmH4ZFHtJzGEhkfN3QvVR3C3w+4BIoWeoY68UVVoA2Np/Bca9z0IPSErVCWhv439aT0We4Dks8kQ==
 
 ts-jest@^29.0.5:
   version "29.1.0"

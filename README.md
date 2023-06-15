@@ -7,9 +7,9 @@ This library is part of the hybrid cloud/local ecosystem
 
 ## Links
 
-[Online user-guide](https://l.youwol.com/doc/@youwol/vsf-rxjs)
 
-[Developers documentation](https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/vsf-rxjs)
+
+[Developers documentation](https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/vsf-rxjs&tab=doc)
 
 [Package on npm](https://www.npmjs.com/package/@youwol/vsf-rxjs)
 

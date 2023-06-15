@@ -1,7 +1,7 @@
 
 const runTimeDependencies = {
     "externals": {
-        "@youwol/vsf-core": "^0.1.0",
+        "@youwol/vsf-core": "^0.1.2",
         "rxjs": "^6.5.5"
     },
     "includedInBundle": {}
@@ -56,10 +56,10 @@ export const setup = {
         assetId:'QHlvdXdvbC92c2Ytcnhqcw==',
     version:'0.1.0-wip',
     shortDescription:"",
-    developerDocumentation:'https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/vsf-rxjs',
+    developerDocumentation:'https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/vsf-rxjs&tab=doc',
     npmPackage:'https://www.npmjs.com/package/@youwol/vsf-rxjs',
     sourceGithub:'https://github.com/youwol/vsf-rxjs',
-    userGuide:'https://l.youwol.com/doc/@youwol/vsf-rxjs',
+    userGuide:'',
     apiVersion:'01',
     runTimeDependencies,
     externals,
