@@ -42,7 +42,7 @@ template = Template(
             entryFile="./lib/toolbox.ts", loadDependencies=["@youwol/vsf-core", "rxjs"]
         ),
     ),
-    userGuide=True,
+    userGuide=False,
 )
 
 generate_template(template)
