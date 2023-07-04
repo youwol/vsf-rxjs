@@ -70,7 +70,21 @@ const getMacroDeployment = (
     },
 })
 
+export function mergeInstancePools(
+    uid: string,
+    ...pools: Immutables<Projects.InstancePool>
+) {
+    const modules = pools.reduce((acc, e) => [...acc, ...e.modules], [])
+    const connections = pools.reduce((acc, e) => [...acc, ...e.connections], [])
+    return new Projects.InstancePool({
+        parentUid: uid,
+        modules,
+        connections,
+    })
+}
+
 export class State {
+    public readonly uid: string
     public readonly instancePool$: BehaviorSubject<
         Immutable<Projects.InstancePool>
     >
@@ -91,6 +105,7 @@ export class State {
     private sourceCompleted = false
 
     constructor(params: {
+        uid: string
         environment: Immutable<Projects.Environment>
         poolsReducer: PoolReducer
     }) {
@@ -98,7 +113,9 @@ export class State {
         this.journal = new ExecutionJournal({
             logsChannels: this.environment.logsChannels,
         })
-        this.instancePool$ = new BehaviorSubject(new Projects.InstancePool())
+        this.instancePool$ = new BehaviorSubject(
+            new Projects.InstancePool({ parentUid: this.uid }),
+        )
         this.overallContext = this.journal.addPage({
             title: `overall`,
         })
@@ -139,7 +156,10 @@ export class State {
             const deployment = getMacroDeployment(this.environment, uid, config)
             this.instancePools.set(
                 message,
-                new Projects.InstancePool().deploy(deployment, instanceCtx),
+                new Projects.InstancePool({ parentUid: this.uid }).deploy(
+                    deployment,
+                    instanceCtx,
+                ),
             )
             const instancePool = await this.instancePools.get(message)
             const reducedPool = this.poolsReducer(

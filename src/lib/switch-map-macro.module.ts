@@ -151,6 +151,7 @@ export const outputs = (
 
 export function module(fwdParams: Modules.ForwardArgs) {
     const state = new State({
+        uid: fwdParams.uid,
         environment: fwdParams.environment,
         poolsReducer: (currentPool, newPool) => newPool,
     })

@@ -109,6 +109,7 @@ import {
     configurationInnerMap,
     innerObservable,
     inputsInnerMap,
+    mergeInstancePools,
     State,
 } from './utils-innermap'
 import { Observable } from 'rxjs'
@@ -144,8 +145,9 @@ export const outputs = (
 
 export function module(fwdParams: Modules.ForwardArgs) {
     const state = new State({
+        uid: fwdParams.uid,
         environment: fwdParams.environment,
-        poolsReducer: Projects.mergeInstancePools,
+        poolsReducer: (...pools) => mergeInstancePools(fwdParams.uid, ...pools),
     })
     return new Modules.Implementation(
         {
