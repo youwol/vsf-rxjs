@@ -27,7 +27,7 @@ export const configurationInnerMap = {
         /**
          * Configuration of the macro, this configuration depends on the actual macro definition.
          */
-        macroConfiguration: new Attributes.AnyObject({ value: {} }),
+        macroConfiguration: Projects.defaultMacroConfig.schema,
         /**
          * The index of the input slot of the macro to forward the message from the outer observable.
          */
