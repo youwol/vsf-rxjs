@@ -101,69 +101,9 @@
  * </script>
  *
  * @module
- */
-import { Modules, Immutable, Projects } from '@youwol/vsf-core'
-import { finalize, map, scan, switchMap, tap } from 'rxjs/operators'
-import { Observable } from 'rxjs'
-import {
-    configurationInnerMap,
-    innerObservable,
-    inputsInnerMap,
-    State,
-} from './utils-innermap'
-
-export const configuration = configurationInnerMap
-
-export const inputs = inputsInnerMap
-
-export const outputs = (
-    arg: Modules.OutputMapperArg<
-        typeof configuration.schema,
-        typeof inputs,
-        State
-    >,
-): {
-    // below type hints are to prevent TS errors related to depth limit of recursion
-    output$: Observable<Immutable<Modules.OutputMessage<unknown>>>
-    instancePool$: Observable<
-        Immutable<Modules.OutputMessage<Projects.InstancePool>>
-    >
-} => {
-    return {
-        output$: arg.inputs.input$.pipe(
-            tap((m) => arg.state.overallContext.info('message received', m)),
-            finalize(() => arg.state.sourceObservableCompleted()),
-            scan((acc, e) => {
-                return [acc.slice(-1)[0], e]
-            }, []),
-            switchMap(([prevMessage, message]) => {
-                if (prevMessage) {
-                    arg.state.clearMacroInstance(prevMessage)
-                }
-                return innerObservable(arg.state, message)
-            }),
-        ),
-        instancePool$: arg.state.instancePool$.pipe(
-            map((pool) => ({ data: pool, context: {} })),
-        ),
-    }
-}
+ */ import { Modules } from '@youwol/vsf-core'
+import { module as baseModule } from './utils-innermap'
 
 export function module(fwdParams: Modules.ForwardArgs) {
-    const state = new State({
-        uid: fwdParams.uid,
-        environment: fwdParams.environment,
-        poolsReducer: (currentPool, newPool) => newPool,
-    })
-    return new Modules.Implementation(
-        {
-            configuration,
-            inputs,
-            outputs,
-            state,
-            journal: state.journal,
-            instancePool: state.instancePool$,
-        },
-        fwdParams,
-    )
+    return baseModule('switch', fwdParams)
 }
