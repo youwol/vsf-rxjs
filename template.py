@@ -27,7 +27,7 @@ template = Template(
     dependencies=Dependencies(
         runTime=RunTimeDeps(
             externals={
-                "@youwol/vsf-core": "^0.1.2",
+                "@youwol/vsf-core": "^0.1.3",
                 "rxjs": "^6.5.5",
             }
         )
