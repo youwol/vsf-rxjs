@@ -39,7 +39,7 @@
  * </script>
  * @module
  */
-import { Modules, Attributes } from '@youwol/vsf-core'
+import { Modules, Configurations, Contracts } from '@youwol/vsf-core'
 import { delay } from 'rxjs/operators'
 
 /**
@@ -57,7 +57,7 @@ export const configuration = {
          *
          * Default to `0`.
          */
-        due: new Attributes.Float({
+        due: new Configurations.Float({
             value: 0,
         }),
     },
@@ -66,7 +66,7 @@ export const configuration = {
 export const inputs = {
     input$: {
         description: 'the input stream',
-        contract: Modules.expect.ofUnknown,
+        contract: Contracts.ofUnknown,
     },
 }
 

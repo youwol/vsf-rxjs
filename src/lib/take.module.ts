@@ -44,7 +44,7 @@
  * </script>
  * @module
  */
-import { Modules, Attributes } from '@youwol/vsf-core'
+import { Modules, Configurations, Contracts } from '@youwol/vsf-core'
 import { take } from 'rxjs/operators'
 
 /**
@@ -61,7 +61,7 @@ export const configuration = {
         /**
          * The maximum number of next values to emit.
          */
-        count: new Attributes.Integer({
+        count: new Configurations.Integer({
             value: 1,
         }),
     },
@@ -70,7 +70,7 @@ export const configuration = {
 export const inputs = {
     input$: {
         description: 'the input stream',
-        contract: Modules.expect.ofUnknown,
+        contract: Contracts.ofUnknown,
     },
 }
 export const outputs = (

@@ -50,7 +50,7 @@ return project
  * </script>
  * @module
  */
-import { Modules, Attributes } from '@youwol/vsf-core'
+import { Modules, Configurations, Contracts } from '@youwol/vsf-core'
 import { map, scan } from 'rxjs/operators'
 
 /**
@@ -70,7 +70,7 @@ export const configuration = {
          *
          * Default to `(acc, {data}) => Array.isArray(acc) ? [...acc, data] : [data]`
          */
-        accumulator: new Attributes.JsCode({
+        accumulator: new Configurations.JsCode({
             value: <V, A>(acc: A, message: Modules.ProcessingMessage<V>): A => {
                 return Array.isArray(acc)
                     ? ([...acc, message.data] as unknown as A)
@@ -82,7 +82,7 @@ export const configuration = {
          *
          * Default to `[]`.
          */
-        seed: new Attributes.Any({
+        seed: new Configurations.Any({
             value: [],
         }),
     },
@@ -91,7 +91,7 @@ export const configuration = {
 export const inputs = {
     input$: {
         description: 'the input stream',
-        contract: Modules.expect.ofUnknown,
+        contract: Contracts.ofUnknown,
     },
 }
 export const outputs = (
