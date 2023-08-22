@@ -37,7 +37,7 @@
  * </script>
  * @module
  */
-import { Modules, Attributes } from '@youwol/vsf-core'
+import { Modules, Configurations, Contracts } from '@youwol/vsf-core'
 import { map } from 'rxjs/operators'
 
 /**
@@ -57,7 +57,7 @@ export const configuration = {
          *
          * Default to `(message) => message`.
          */
-        project: new Attributes.JsCode({
+        project: new Configurations.JsCode({
             value: (
                 message: Modules.ProcessingMessage,
                 // eslint-disable-next-line unused-imports/no-unused-vars -- for documentation purposes
@@ -70,7 +70,7 @@ export const configuration = {
 export const inputs = {
     input$: {
         description: 'the input stream',
-        contract: Modules.expect.ofUnknown,
+        contract: Contracts.ofUnknown,
     },
 }
 export const outputs = (

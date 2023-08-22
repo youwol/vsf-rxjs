@@ -36,7 +36,7 @@
  * </script>
  * @module
  */
-import { Modules, Attributes } from '@youwol/vsf-core'
+import { Modules, Configurations } from '@youwol/vsf-core'
 import { timer } from 'rxjs'
 import { map } from 'rxjs/operators'
 
@@ -56,14 +56,14 @@ export const configuration = {
         /**
          * The amount of time in milliseconds to wait before emitting.
          */
-        dueTime: new Attributes.Float({
+        dueTime: new Configurations.Float({
             value: 0,
         }),
         /**
          * The delay between each value emitted in the interval.
          * Passing a negative number here will result in immediate completion after the first value is emitted.
          */
-        interval: new Attributes.Float({
+        interval: new Configurations.Float({
             value: 1000,
         }),
     },

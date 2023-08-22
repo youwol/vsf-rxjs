@@ -34,8 +34,8 @@
     project = await project.exposeMacro('macro', {
         configuration: {
             schema:{
-            	dt: new env.vsf.Attributes.Integer({value: 1000}),
-            	take: new env.vsf.Attributes.Integer({value: 3}),
+            	dt: new env.vsf.Configurations.Integer({value: 1000}),
+            	take: new env.vsf.Configurations.Integer({value: 3}),
             }
         },
         configMapper: (config)=> ({
@@ -72,9 +72,9 @@
     	from: {
             input: [{dt: 2000, take: 2}, {dt: 1000, take: 2}]
         },
-        mergeMap: { macroId: 'macro' },
-        switchMap: { macroId: 'macro' },
-        concatMap: { macroId: 'macro' },
+        mergeMap: { innerMacro: { macroTypeId: 'macro' }},
+        switchMap: { innerMacro: { macroTypeId: 'macro' }},
+        concatMap: { innerMacro: { macroTypeId: 'macro' }},
         view0: viewConf,
         view1: viewConf,
         view2: viewConf,

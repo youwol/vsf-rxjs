@@ -75,7 +75,7 @@
  * </script>
  * @module
  */
-import { Modules, Attributes } from '@youwol/vsf-core'
+import { Modules, Configurations, Contracts } from '@youwol/vsf-core'
 import { mergeMap } from 'rxjs/operators'
 import { Observable, of } from 'rxjs'
 
@@ -119,7 +119,7 @@ export const configuration = {
          *
          * Default to `(message) => of(message)`.
          */
-        project: new Attributes.JsCode({
+        project: new Configurations.JsCode({
             value: (
                 message: Modules.ProcessingMessage,
             ): Observable<Modules.OutputMessage> => of(message),
@@ -130,7 +130,7 @@ export const configuration = {
 export const inputs = {
     input$: {
         description: 'the input stream',
-        contract: Modules.expect.ofUnknown,
+        contract: Contracts.ofUnknown,
     },
 }
 export const outputs = (

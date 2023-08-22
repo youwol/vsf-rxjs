@@ -48,7 +48,7 @@ return project
  * </script>
  * @module
  */
-import { Modules, Attributes } from '@youwol/vsf-core'
+import { Modules, Configurations } from '@youwol/vsf-core'
 import { createVariableInputs } from './common'
 import { merge } from 'rxjs'
 
@@ -67,7 +67,7 @@ export const configuration = {
          *
          * Default to `2`.
          */
-        inputsCount: new Attributes.Integer({
+        inputsCount: new Configurations.Integer({
             value: 2,
         }),
     },

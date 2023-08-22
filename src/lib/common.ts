@@ -1,4 +1,4 @@
-import { Modules } from '@youwol/vsf-core'
+import { Contracts } from '@youwol/vsf-core'
 
 export function createVariableInputs(conf: { inputsCount: number }) {
     const inputsCount = (conf && conf.inputsCount) || 2
@@ -7,7 +7,7 @@ export function createVariableInputs(conf: { inputsCount: number }) {
             ...acc,
             [`input_${i}`]: {
                 description: `the input stream ${i}`,
-                contract: Modules.expect.ofUnknown,
+                contract: Contracts.ofUnknown,
             },
         }),
         {},

@@ -40,7 +40,7 @@
  *
  * @module
  */
-import { Modules, Attributes } from '@youwol/vsf-core'
+import { Modules, Configurations } from '@youwol/vsf-core'
 import { of } from 'rxjs'
 
 /**
@@ -66,7 +66,7 @@ export const configuration = {
          *
          * Default to `{}`.
          */
-        args: new Attributes.Any({
+        args: new Configurations.Any({
             value: {},
         }),
         /** If {@link args} is an array and this attribute is `true`, the individual value
@@ -74,7 +74,7 @@ export const configuration = {
          *
          * Default to `false`.
          */
-        spread: new Attributes.Boolean({
+        spread: new Configurations.Boolean({
             value: false,
         }),
     },

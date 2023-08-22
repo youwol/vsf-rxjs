@@ -38,7 +38,7 @@
  * </script>
  * @module
  */
-import { Modules, Attributes } from '@youwol/vsf-core'
+import { Modules, Configurations, Contracts } from '@youwol/vsf-core'
 import { filter } from 'rxjs/operators'
 
 /**
@@ -59,7 +59,7 @@ export const configuration = {
          *
          * Default to `({data}) => data != undefined`
          */
-        predicate: new Attributes.JsCode({
+        predicate: new Configurations.JsCode({
             value: (
                 message: Modules.ProcessingMessage,
                 // eslint-disable-next-line unused-imports/no-unused-vars -- for documentation purpose
@@ -72,7 +72,7 @@ export const configuration = {
 export const inputs = {
     input$: {
         description: 'the input stream',
-        contract: Modules.expect.ofUnknown,
+        contract: Contracts.ofUnknown,
     },
 }
 export const outputs = (

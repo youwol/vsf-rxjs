@@ -70,7 +70,7 @@
  * </script>
  * @module
  */
-import { Modules, Attributes } from '@youwol/vsf-core'
+import { Modules, Configurations, Contracts } from '@youwol/vsf-core'
 import { debounceTime } from 'rxjs/operators'
 
 /**
@@ -88,7 +88,7 @@ export const configuration = {
          *
          * Default to `0`.
          */
-        dueTime: new Attributes.Float({
+        dueTime: new Configurations.Float({
             value: 0,
         }),
     },
@@ -97,7 +97,7 @@ export const configuration = {
 export const inputs = {
     input$: {
         description: 'the input stream',
-        contract: Modules.expect.ofUnknown,
+        contract: Contracts.ofUnknown,
     },
 }
 

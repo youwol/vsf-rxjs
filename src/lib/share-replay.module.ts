@@ -14,7 +14,7 @@
  *
  * @module
  */
-import { Modules, Attributes } from '@youwol/vsf-core'
+import { Modules, Configurations, Contracts } from '@youwol/vsf-core'
 import { shareReplay } from 'rxjs/operators'
 
 export const configuration = {
@@ -22,19 +22,19 @@ export const configuration = {
         /**
          * Size of the buffer.
          */
-        bufferSize: new Attributes.Integer({ value: undefined }),
+        bufferSize: new Configurations.Integer({ value: undefined }),
 
         /**
          *  If true, unsubscribe the source when the reference counter drops to zero.
          */
-        refCount: new Attributes.Boolean({ value: true }),
+        refCount: new Configurations.Boolean({ value: true }),
     },
 }
 
 export const inputs = {
     input$: {
         description: 'the input stream',
-        contract: Modules.expect.ofUnknown,
+        contract: Contracts.ofUnknown,
     },
 }
 
