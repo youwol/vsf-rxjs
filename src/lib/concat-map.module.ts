@@ -1,13 +1,12 @@
 // noinspection JSValidateJSDoc
 
 /**
- * This module wrap the [mergeMap](https://rxjs.dev/api/operators/mergeMap) operator of [RxJs](https://rxjs.dev/).
+ * This module wrap the [concatMap](https://rxjs.dev/api/operators/concatMap) operator of [RxJs](https://rxjs.dev/).
  *
  * It transforms the items emitted by an observable into a new observable, and then flattens the resulting
- * observables into a single observable  along with `merge` policy..
+ * observables into a single observable along with `concat` policy..
  *
  * See {@link configuration} to setup the module.
- *
  *
  * <iframe id="iFrameExample" src="" width="100%" height="800px"></iframe>
  * <script>
@@ -16,13 +15,13 @@
    const rxjs = project.environment.rxjs
    const ops = rxjs.operators
    project = await project.parseDag(
-       ['(of#of1)>>(delay#delay0)>>0(merge#merge)>#c>(mergeMap#mergeMap)>>(accView#view)',
+       ['(of#of1)>>(delay#delay0)>>0(merge#merge)>#c>(concatMap#concatMap)>>(accView#view)',
        '(of#of3)>>(delay#delay1)>>1(#merge)',
        '(of#of5)>>(delay#delay2)>>2(#merge)'],
        {   of1: { args: 1 }, of3: { args: 3 }, of5: { args: 5 },
            delay0: { due: 0 }, delay1: { due: 3200 }, delay2: { due: 4000 },
            merge: { inputsCount: 3},
-           mergeMap: { project: (message) => {
+           concatMap: { project: (message) => {
                 const base = rxjs.of(10*message.data)
            	    return rxjs.merge(
                 	base.pipe(ops.delay(0)),
@@ -54,7 +53,7 @@
  * @module
  */
 import { Modules, Macros } from '@youwol/vsf-core'
-import { mergeMap } from 'rxjs/operators'
+import { concatMap } from 'rxjs/operators'
 import {
     higherOrderConfig,
     higherOrderOutputs,
@@ -67,7 +66,8 @@ import {
 export const configuration = higherOrderConfig
 
 export const inputs = higherOrderInputs
-export const outputs = higherOrderOutputs<typeof configuration.schema>(mergeMap)
+export const outputs =
+    higherOrderOutputs<typeof configuration.schema>(concatMap)
 
 export function module(fwdParams) {
     const state = new Macros.InnerObservablesPool({

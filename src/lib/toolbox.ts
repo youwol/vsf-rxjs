@@ -13,9 +13,8 @@ import { module as reduceModule } from './reduce.module'
 import { module as debounceTime } from './debounce-time.module'
 import { module as shareReplayModule } from './share-replay.module'
 import { module as delay } from './delay.module'
-import { module as mergeMapMacroModule } from './merge-map-macro.module'
-import { module as switchMapMacroModule } from './switch-map-macro.module'
-import { module as concatMapMacroModule } from './concat-map-macro.module'
+import { module as switchMapModule } from './switch-map.module'
+import { module as concatMapModule } from './concat-map.module'
 import { module as scanModule } from './scan.module'
 import { basePathDoc, urlModuleDoc } from './constants'
 import { setup } from '../auto-generated'
@@ -165,29 +164,20 @@ export function toolbox() {
             }),
             new Modules.Module({
                 declaration: {
-                    typeId: 'mergeMapMacro',
-                    documentation: urlModuleDoc('RxJS', 'MergeMapMacro'),
+                    typeId: 'switchMap',
+                    documentation: urlModuleDoc('RxJS', 'SwitchMap'),
                 },
                 implementation: ({ fwdParams }) => {
-                    return mergeMapMacroModule(fwdParams)
+                    return switchMapModule(fwdParams)
                 },
             }),
             new Modules.Module({
                 declaration: {
-                    typeId: 'switchMapMacro',
-                    documentation: urlModuleDoc('RxJS', 'SwitchMapMacro'),
+                    typeId: 'concatMap',
+                    documentation: urlModuleDoc('RxJS', 'ConcatMap'),
                 },
                 implementation: ({ fwdParams }) => {
-                    return switchMapMacroModule(fwdParams)
-                },
-            }),
-            new Modules.Module({
-                declaration: {
-                    typeId: 'concatMapMacro',
-                    documentation: urlModuleDoc('RxJS', 'ConcatMapMacro'),
-                },
-                implementation: ({ fwdParams }) => {
-                    return concatMapMacroModule(fwdParams)
+                    return concatMapModule(fwdParams)
                 },
             }),
             new Modules.Module({

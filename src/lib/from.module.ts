@@ -11,7 +11,7 @@
  *
  * Below is an example illustrating the module's usage.
  * Note that the delay between emission from the module `from` is added only for illustrating purposes
- * (through the `transmissionDelay` property of the {@link VsfCore.Modules.Connection} `c`).
+ * (through the `transmissionDelay` property).
  *
  * <iframe id="iFrameExample" src="" width="100%" height="800px"></iframe>
  * <script>
