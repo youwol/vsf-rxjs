@@ -16,6 +16,7 @@ import { module as delay } from './delay.module'
 import { module as switchMapModule } from './switch-map.module'
 import { module as concatMapModule } from './concat-map.module'
 import { module as scanModule } from './scan.module'
+import { module as mapReduceModule } from './map-reduce.module'
 import { basePathDoc, urlModuleDoc } from './constants'
 import { setup } from '../auto-generated'
 
@@ -187,6 +188,15 @@ export function toolbox() {
                 },
                 implementation: ({ fwdParams }) => {
                     return scanModule(fwdParams)
+                },
+            }),
+            new Modules.Module({
+                declaration: {
+                    typeId: 'mapReduce',
+                    documentation: urlModuleDoc('RxJS', 'MapReduce'),
+                },
+                implementation: ({ fwdParams }) => {
+                    return mapReduceModule(fwdParams)
                 },
             }),
         ],
