@@ -17,6 +17,7 @@ import { module as switchMapModule } from './switch-map.module'
 import { module as concatMapModule } from './concat-map.module'
 import { module as scanModule } from './scan.module'
 import { module as mapReduceModule } from './map-reduce.module'
+import { module as identityModule } from './identity.module'
 import { basePathDoc, urlModuleDoc } from './constants'
 import { setup } from '../auto-generated'
 
@@ -197,6 +198,15 @@ export function toolbox() {
                 },
                 implementation: ({ fwdParams }) => {
                     return mapReduceModule(fwdParams)
+                },
+            }),
+            new Modules.Module({
+                declaration: {
+                    typeId: 'identity',
+                    documentation: urlModuleDoc('RxJS', 'Identity'),
+                },
+                implementation: ({ fwdParams }) => {
+                    return identityModule(fwdParams)
                 },
             }),
         ],
