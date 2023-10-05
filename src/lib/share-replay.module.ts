@@ -6,10 +6,6 @@
  * It allows multiple subscribers to share the same source observable and
  * replay a specified number of emitted values to new subscribers.
  *
- * > The modules' outputs are configured using a `shareReplay` operators with infinite buffer size at that time.
- * > Exceptions includes {@link MergeMapMacro}, {@link SwitchMapMacro}, {@link ConcatMapMacro}: those needs
- * > this `shareReplay` module to broadcast their emitted messages.
- *
  * See {@link configuration} to setup the module.
  *
  * @module

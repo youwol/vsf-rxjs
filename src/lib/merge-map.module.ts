@@ -12,42 +12,56 @@
  * <iframe id="iFrameExample" src="" width="100%" height="800px"></iframe>
  * <script>
  *     const src = `return async ({project, cell, env}) => {
-   project = await project.import('@youwol/vsf-rxjs', '@youwol/vsf-flux-view')
-   const rxjs = project.environment.rxjs
-   const ops = rxjs.operators
-   project = await project.parseDag(
-       ['(of#of1)>>(delay#delay0)>>0(merge#merge)>#c>(mergeMap#mergeMap)>>(accView#view)',
-       '(of#of3)>>(delay#delay1)>>1(#merge)',
-       '(of#of5)>>(delay#delay2)>>2(#merge)'],
-       {   of1: { args: 1 }, of3: { args: 3 }, of5: { args: 5 },
-           delay0: { due: 0 }, delay1: { due: 3200 }, delay2: { due: 4000 },
-           merge: { inputsCount: 3},
-           mergeMap: { project: (message) => {
-                const base = rxjs.of(10*message.data)
-           	    return rxjs.merge(
-                	base.pipe(ops.delay(0)),
-                	base.pipe(ops.delay(600)),
-                	base.pipe(ops.delay(1200)),
-                ).pipe(ops.map((data) => ({data}) ))
-           } },
-           view:{
-              vDomMap: (v) => ({innerText:  v})
-          },
-     },
-   )
-   project = project.addHtml("View", project.summaryHtml())
-   project = project.addToCanvas(
-     {
-         selector: ({uid}) => ['c'].includes(uid),
-         view: (elem) => ({innerText: env.fv.attr$(elem.end$, (m) => m.data) })
-     },
-     {
-          selector: ({uid}) => ['view'].includes(uid),
-          view: (elem) => elem.html()
-     }
-   )
-   return project
-}`
+ *    const rxjs = project.environment.rxjs
+ *    const ops = rxjs.operators
+ *    return await project.with({
+ *         toolboxes:['@youwol/vsf-rxjs', '@youwol/vsf-flux-view'],
+ *         flowchart:{
+ *             branches:[
+ *                 '(of#of1)>>(delay#delay0)>>0(merge#merge)>#c>(mergeMap#mergeMap)>>(accView#view)',
+ *                 '(of#of3)>>(delay#delay1)>>1(#merge)',
+ *                 '(of#of5)>>(delay#delay2)>>2(#merge)'
+ *             ],
+ *             configurations:{
+ *                 of1: { args: 1 },
+ *                 of3: { args: 3 },
+ *                 of5: { args: 5 },
+ *                 delay0: { due: 0 },
+ *                 delay1: { due: 3200 },
+ *                 delay2: { due: 4000 },
+ *                 merge: { inputsCount: 3},
+ *                 mergeMap: { project: (message) => {
+ *                     const base = rxjs.of(message.data)
+ *                     return rxjs.merge(
+ *                         base.pipe(ops.delay(0)),
+ *                         base.pipe(ops.delay(600)),
+ *                         base.pipe(ops.delay(1200)),
+ *                         ).pipe(
+ *                             ops.map((data) => ({data}) )
+ *                         )
+ *                     }
+ *                 },
+ *                 view:{ vDomMap: (v) => ({innerText:  v})},
+ *             }
+ *         },
+ *         views:[{
+ *             id:'View',
+ *             html: project.summaryHtml()
+ *         }],
+ *         canvas:{
+ *             annotations:[
+ *                 {
+ *                     selector: ({uid}) => ['c'].includes(uid),
+ *                     html: (elem) => ({innerText: env.fv.attr$(elem.end$, (m) => m.data) })
+ *                 },
+ *                 {
+ *                     selector: ({uid}) => ['view'].includes(uid),
+ *                     html: (elem) => elem.html()
+ *                 }
+ *             ]
+ *         }
+ *    })
+ * }`
  *     const url = '/applications/@youwol/vsf-snippet/latest?tab=dag&content='+encodeURIComponent(src)
  *     document.getElementById('iFrameExample').setAttribute("src",url);
  * </script>

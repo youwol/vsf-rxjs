@@ -11,25 +11,31 @@
  * <iframe id="iFrameExample" src="" width="100%" height="800px"></iframe>
  * <script>
  *      const src = `return async ({project, cell, env}) => {
-    project = await project.import('@youwol/vsf-rxjs', '@youwol/vsf-debug')\n
-    project = await project.parseDag(
- 		'(timer#timer)>#c1>(map#map)>#c2>(console#log)',
-      	{
-      	    map: { project: ({data, context}) => ({data:data*10, context}) },
+    return await project.with({
+        toolboxes: ['@youwol/vsf-rxjs', '@youwol/vsf-debug'],
+        flowchart: {
+            branches: ['(timer#timer)>#c1>(map#map)>#c2>(console#log)'],
+            configurations: {
+                map: { project: ({data, context}) => ({data:data*10, context}) },
+            }
         },
-    )
-    project = project.addHtml("View", project.summaryHtml())
-    project = project.addToCanvas(
-    	{
-    		selector: ({uid}) => ['c1', 'c2'].includes(uid),
-        	view: (elem) => ({innerText: env.fv.attr$(elem.end$, (m) => m.data) })
-    	},
-    	{
-    		selector: ({uid}) => ['map'].includes(uid),
-        	view: (elem) => ({innerText: 'times 10' })
-    	}
-    )
-	return project
+        views: [{
+            id: 'View',
+            html: project.summaryHtml()
+        }],
+        canvas: {
+            annotations: [
+                {
+                    selector: ({uid}) => ['c1', 'c2'].includes(uid),
+                    html: (elem) => ({innerText: env.fv.attr$(elem.end$, (m) => m.data) })
+                },
+                {
+                    selector: ({uid}) => ['map'].includes(uid),
+                    html: (elem) => ({innerText: 'times 10' })
+                }
+            ]
+        }
+    })
 }
  `
  *     const url = '/applications/@youwol/vsf-snippet/latest?tab=dag&content='+encodeURIComponent(src)

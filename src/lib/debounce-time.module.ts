@@ -16,53 +16,59 @@
  * <iframe id="iFrameExample" src="" width="100%" height="800px"></iframe>
  * <script>
  *      const src = `return async ({project, cell, env}) => {
-    project = await project.import('@youwol/vsf-rxjs', '@youwol/vsf-flux-view', '@youwol/vsf-debug')
     const { ReplaySubject } =  env.rxjs \n
     class State{
     	constructor(){ this.output$ = new ReplaySubject(1) }
         set(v) { this.output$.next({data:v}) }
     } \n
-    project = await project.parseDag(
- 		'(of#of)>>(view#input)>#c1>(debounceTime#debounce)>#c2>(console#log)',
-      	{
-            debounce: { dueTime: 500 },
-            input: {
-                state: new State(),
-                outputs: (state) => ({
-                    output: state.output$
-                }),
-                vDomMap: (data, mdle) => ({
-                    style:{
-                        marginTop:'15px'
-                    },
-                    children: [
-                        { innerText: "Move mouse below"},
-                        {
-                            class:'border mx-auto',
-                            style:{width: '20px', height:'15px'},
-                            onmousemove: (ev) => mdle.state.set([ev.clientX, ev.clientY])
-                        }
-                    ]
-                })
+    return await project.with({
+        toolboxes:['@youwol/vsf-rxjs', '@youwol/vsf-flux-view', '@youwol/vsf-debug'],
+        flowchart:{
+            branches:['(of#of)>>(view#input)>#c1>(debounceTime#debounce)>#c2>(console#log)'],
+            configurations:{
+                debounce: { dueTime: 500 },
+                input: {
+                    state: new State(),
+                    outputs: (state) => ({
+                        output: state.output$
+                    }),
+                    vDomMap: (data, mdle) => ({
+                        style:{
+                            marginTop:'15px'
+                        },
+                        children: [
+                            { innerText: "Move mouse below"},
+                            {
+                                class:'border mx-auto',
+                                style:{width: '20px', height:'15px'},
+                                onmousemove: (ev) => mdle.state.set([ev.clientX, ev.clientY])
+                            }
+                        ]
+                    })
+                }
             }
         },
-    )
-    project = project.addHtml("View", project.summaryHtml())
-    project = project.addToCanvas(
-        {
-    		selector: ({uid}) => ['input'].includes(uid),
-        	view: (elem) => elem.html()
-    	},
-    	{
-    		selector: ({uid}) => ['debounce'].includes(uid),
-        	view: (elem) => ({innerText: 'debounce ' + elem.configurationInstance.dueTime + ' ms'})
-    	},
-    	{
-    		selector: ({uid}) => ['c1', 'c2'].includes(uid),
-        	view: (elem) => ({innerText: env.fv.attr$(elem.end$, (m) => m.data) })
-    	}
-    )
-	return project
+        views:[{
+            id:'View',
+            html: project.summaryHtml()
+        }],
+        canvas:{
+            annotations:[
+                {
+                    selector: ({uid}) => ['input'].includes(uid),
+                    html: (elem) => elem.html()
+                },
+                {
+                    selector: ({uid}) => ['debounce'].includes(uid),
+                    html: (elem) => ({innerText: elem.configurationInstance.dueTime + ' ms'})
+                },
+                {
+                    selector: ({uid}) => ['c1', 'c2'].includes(uid),
+                    html: (elem) => ({innerText: env.fv.attr$(elem.end$, (m) => m.data) })
+                }
+            ]
+        }
+    })
 }
  `
  *     const url = '/applications/@youwol/vsf-snippet/latest?tab=dag&content='+encodeURIComponent(src)

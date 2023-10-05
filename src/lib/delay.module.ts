@@ -13,25 +13,31 @@
  * <iframe id="iFrameExample" src="" width="100%" height="800px"></iframe>
  * <script>
  *      const src = `return async ({project, cell, env}) => {
-    project = await project.import('@youwol/vsf-rxjs', '@youwol/vsf-debug')\n
-    project = await project.parseDag(
- 		'(timer#timer)>#c1>(delay#delay)>#c2>(console#log)',
-      	{
-            delay: { due: 500 },
+    return await project.with({
+        toolboxes:['@youwol/vsf-rxjs', '@youwol/vsf-debug'],
+        flowchart:{
+            branches:['(timer#timer)>#c1>(delay#delay)>#c2>(console#log)'],
+            configurations:{
+                delay: { due: 500 },
+            }
         },
-    )
-    project = project.addHtml("View", project.summaryHtml())
-    project = project.addToCanvas(
-    	{
-    		selector: ({uid}) => ['c1', 'c2'].includes(uid),
-        	view: (elem) => ({innerText: env.fv.attr$(elem.end$, (m) => m.data) })
-    	},
-    	{
-    		selector: ({uid}) => ['delay'].includes(uid),
-        	view: (elem) => ({innerText: "delay " + elem.configurationInstance.due+ " ms" })
-    	}
-    )
-	return project
+        views:[{
+            id:'View',
+            html: project.summaryHtml()
+        }],
+        canvas:{
+            annotations:[
+                {
+                    selector: ({uid}) => ['c1', 'c2'].includes(uid),
+                    html: (elem) => ({innerText: env.fv.attr$(elem.end$, (m) => m.data) })
+                },
+                {
+                    selector: ({uid}) => ['delay'].includes(uid),
+                    html: (elem) => ({innerText: "delay " + elem.configurationInstance.due+ " ms" })
+                }
+            ]
+        }
+    })
 }
  `
  *     const url = '/applications/@youwol/vsf-snippet/latest?tab=dag&content='+encodeURIComponent(src)

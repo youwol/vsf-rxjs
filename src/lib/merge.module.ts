@@ -11,36 +11,44 @@
  * <iframe id="iFrameExample" src="" width="100%" height="800px"></iframe>
  * <script>
  *      const src = `return async ({project, cell, env}) => {
-   project = await project.import('@youwol/vsf-rxjs', '@youwol/vsf-flux-view')\n
-   project = await project.parseDag(
-        ['(timer#timer1)>>(take#take1)>#c1>0(merge#merge)>#c3>(accView#view)',
-         '(timer#timer2)>>(delay#delay)>>(take#take2)>#c2>1(#merge)'
-        ],
-         {   take1: { count: 3 },
-             take2: { count: 4 },
-             delay: { due: 500 },
-             merge: { inputsCount: 2 },
-             view:{
-               vDomMap: (v) => ({innerText:  v})
-             },
-       },
-   )
-   project = project.addHtml("View", project.summaryHtml())
-   project = project.addToCanvas(
-       {
-           selector: ({uid}) => ['c1', 'c2', 'c3'].includes(uid),
-           view: (elem) => ({innerText: env.fv.attr$(elem.end$, (m) => m.data) })
-       },
-       {
-    		selector: ({uid}) => ['take1', 'take2'].includes(uid),
-        	view: (elem) => ({innerText: "take "+elem.configurationInstance.count })
-    	},
-       {
-    		selector: ({uid}) => ['view'].includes(uid),
-        	view: (elem) => elem.html()
-    	},
-   )
-return project
+    return await project.with({
+        toolboxes: ['@youwol/vsf-rxjs', '@youwol/vsf-flux-view'],
+        flowchart: {
+            branches: [
+                '(timer#timer1)>>(take#take1)>#c1>0(merge#merge)>#c3>(accView#view)',
+                '(timer#timer2)>>(delay#delay)>>(take#take2)>#c2>1(#merge)'
+            ],
+            configurations: {
+                take1: { count: 3 },
+                take2: { count: 4 },
+                delay: { due: 500 },
+                merge: { inputsCount: 2 },
+                view:{
+                   vDomMap: (v) => ({innerText:  v})
+                },
+            }
+        },
+        views: [{
+            id: 'View',
+            html: project.summaryHtml()
+        }],
+        canvas: {
+            annotations: [
+                {
+                    selector: ({uid}) => ['c1', 'c2', 'c3'].includes(uid),
+                    html: (elem) => ({innerText: env.fv.attr$(elem.end$, (m) => m.data) })
+                },
+                {
+                    selector: ({uid}) => ['take1', 'take2'].includes(uid),
+                    html: (elem) => ({innerText: "take "+elem.configurationInstance.count })
+                },
+                {
+                    selector: ({uid}) => ['view'].includes(uid),
+                    html: (elem) => elem.html()
+                },
+            ]
+        }
+    })
 }
  `
  *     const url = '/applications/@youwol/vsf-snippet/latest?tab=dag&content='+encodeURIComponent(src)

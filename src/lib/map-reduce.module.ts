@@ -10,50 +10,60 @@
  * <iframe id="iFrameExample" src="" width="100%" height="800px"></iframe>
  * <script>
  *   const src = `return async ({project, cell, env}) => {
-    project = await project.import('@youwol/vsf-rxjs', '@youwol/vsf-flux-view')
-    project = await project.parseDag([
-          '(map#times2)'
-   		],
-          { times2: { project: ({data,context}) => ({data:2*data, context}) } },
-         'time2Macro'
-  	)
-    project = await project.exposeMacro('time2Macro', {
-          inputs:['0(#times2)'],
-          outputs: ['(#times2)0']
-    })
-    project = await project.parseDag([
-        '(from#from)>#c>(mapReduce#times2)>>(accView#view)',
-        ],{
-        from: { input: [[1, 2, 3], [4, 5, 6]]},
-        times2: {
-            project: (message) => ({
-                macroTypeId: 'time2Macro',
-                inputSlot:0,
-                outputSlot: 0,
-                message,
-                purgeOnDone: false
-            })
+    return await project.with({
+        toolboxes: ['@youwol/vsf-rxjs', '@youwol/vsf-flux-view'],
+        macros: [{
+            typeId: 'times2Macro',
+            flowchart: {
+                branches: ['(map#times2)'],
+                configurations: { times2: { project: ({data,context}) => ({data:2*data, context}) } },
+            },
+            api: {
+                inputs:['0(#times2)'],
+                outputs: ['(#times2)0']
+            }
+        }],
+        flowchart: {
+            branches: ['(from#from)>#c>(mapReduce#times2)>>(accView#view)'],
+            configurations: {
+                from: { input: [[1, 2, 3], [4, 5, 6]]},
+                times2: {
+                    project: (message) => ({
+                        macroTypeId: 'times2Macro',
+                        inputSlot:0,
+                        outputSlot: 0,
+                        message,
+                        purgeOnDone: false
+                    })
+                },
+                view: {
+                    containerAttributes: { class:'d-flex flex-column rounded p-1 border', style:{marginTop:'15px'}},
+                    vDomMap: (data) => ({ innerText: 'received: '+ data })
+                },
+                c: { transmissionDelay: 1000 }
+            }
         },
-        view: {
-            containerAttributes: { class:'rounded p-1 border', style:{marginTop:'15px'}},
-            vDomMap: (data) => ({ innerText: 'received: '+ data })
-        },
-        c: { transmissionDelay: 1000 }
+        views: [{
+            id: 'View',
+            html: project.summaryHtml()
+        }],
+        canvas: {
+            annotations: [
+                {
+                    selector: ({uid}) => uid == 'view',
+                    html: (elem) => elem.html()
+                },
+                {
+                    selector: ({uid}) => uid == 'from',
+                    html: () => ({innerText:'[[1,2,3], [4,5,6]]'})
+                },
+                {
+                    selector: (elem) => elem.uid == 'c',
+                    html: (c) => ({ innerText: env.fv.attr$( c.end$, ({data}) =>  data ) })
+                }
+            ]
+        }
     })
-    project = project.addHtml("View", project.summaryHtml())
-    project = project.addToCanvas({
-        selector: ({uid}) => uid == 'view',
-        view: (elem) => elem.html()
-    })
-    project = project.addToCanvas({
-        selector: ({uid}) => uid == 'from',
-        view: () => ({innerText:'[[1,2,3], [4,5,6]]'})
-    })
-    project = project.addToCanvas({
-        selector: (elem) => elem.uid == 'c',
-        view: (c) => ({ innerText: env.fv.attr$( c.end$, ({data}) =>  data ) })
-    })
-    return project
   }
  `
  *     const url = '/applications/@youwol/vsf-snippet/latest?tab=dag&content='+encodeURIComponent(src)

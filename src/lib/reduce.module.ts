@@ -14,37 +14,43 @@
  * <iframe id="iFrameExample" src="" width="100%" height="800px"></iframe>
  * <script>
  *      const src = `return async ({project, cell, env}) => {
-   project = await project.import('@youwol/vsf-rxjs', '@youwol/vsf-debug')\n
-   project = await project.parseDag(
-        ['(timer#timer)>>(take#take)>#c1>(reduce#reduce)>#c2>(console#log)'
-        ],
-         {   take: { count: 4 },
-             reduce: { accumulator: (acc, {data}) => acc + data, seed: 0 },
-             view:{
-               vDomMap: (v) => ({innerText:  v})
-             },
-       },
-   )
-   project = project.addHtml("View", project.summaryHtml())
-   project = project.addToCanvas(
-       {
-           selector: ({uid}) => ['c1', 'c2'].includes(uid),
-           view: (elem) => ({innerText: env.fv.attr$(elem.end$, (m) => m.data) })
-       },
-       {
-    		selector: ({uid}) => ['view'].includes(uid),
-        	view: (elem) => elem.html()
-       },
-       {
-    		selector: ({uid}) => ['take'].includes(uid),
-        	view: (elem) => ({innerText: "Take " + elem.configurationInstance.count})
-       },
-       {
-    		selector: ({uid}) => ['reduce'].includes(uid),
-        	view: (elem) => ({innerText: "(acc, e) => acc + e"})
-    	},
-   )
-return project
+    return await project.with({
+        toolboxes: ['@youwol/vsf-rxjs', '@youwol/vsf-debug'],
+        flowchart: {
+            branches: ['(timer#timer)>>(take#take)>#c1>(reduce#reduce)>#c2>(console#log)'],
+            configurations: {
+                take: { count: 4 },
+                reduce: { accumulator: (acc, {data}) => acc + data, seed: 0 },
+                view:{
+                   vDomMap: (v) => ({innerText:  v})
+                },
+            }
+        },
+        views:[{
+            id:'View',
+            html: project.summaryHtml()
+        }],
+        canvas: {
+            annotations: [
+                {
+                    selector: ({uid}) => ['c1', 'c2'].includes(uid),
+                    html: (elem) => ({innerText: env.fv.attr$(elem.end$, (m) => m.data) })
+                },
+                {
+                    selector: ({uid}) => ['view'].includes(uid),
+                    html: (elem) => elem.html()
+                },
+                {
+                    selector: ({uid}) => ['take'].includes(uid),
+                    html: (elem) => ({innerText: "Take " + elem.configurationInstance.count})
+                },
+                {
+                    selector: ({uid}) => ['reduce'].includes(uid),
+                    html: (elem) => ({innerText: "(acc, e) => acc + e"})
+                },
+            ]
+        }
+    })
 }
  `
  *     const url = '/applications/@youwol/vsf-snippet/latest?tab=dag&content='+encodeURIComponent(src)

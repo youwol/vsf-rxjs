@@ -17,7 +17,6 @@
  * <iframe id="iFrameExample" src="" width="100%" height="800px"></iframe>
  * <script>
  *      const src = `return async ({project, cell, env}) => {
-   project = await project.import('@youwol/vsf-rxjs', '@youwol/vsf-flux-view')
    const { ReplaySubject, operators } =  env.rxjs
    const { attr$ } =  globalThis['@youwol/flux-view']
    class State{
@@ -49,33 +48,42 @@
                ]
        }}
    })
-   project = await project.parseDag(
-        ['(of#of1)>>(view#input1)>#c1>0(combineLatest#combine)>#c>(accView#output)',
-       '(of#of2)>>(view#input2)>#c2>1(#combine)'],
-         {	combine: {inputsCount:2},
-            of1: { args: 'red' },
-           input1: vDom(['red', 'green', 'blue']),
-            of2: { args: 'square' },
-           input2: vDom(['square', 'circle']),
-           output:{ vDomMap: (data) => ({ innerText:  data }) }
-       },
-   )
-   project = project.addHtml("View", project.summaryHtml())
-   project = project.addToCanvas(
-       {
-           selector: ({uid}) => ['input1','input2', 'output'].includes(uid),
-           view: (elem) => elem.html()
-       },
-       {
-           selector: ({uid}) => ['c', 'c1', 'c2'].includes(uid),
-           view: (elem) => ({innerText: env.fv.attr$(elem.end$, (m) => m.data) })
-       },
-       {
-           selector: ({uid}) => ['of1', 'of2'].includes(uid),
-           view: (elem) => ({innerText: elem.configurationInstance.args })
-       }
-   )
-   return project
+   return await project.with({
+        toolboxes:['@youwol/vsf-rxjs', '@youwol/vsf-flux-view'],
+        flowchart:{
+            branches: [
+                '(of#of1)>>(view#input1)>#c1>0(combineLatest#combine)>#c>(accView#output)',
+                '(of#of2)>>(view#input2)>#c2>1(#combine)'],
+            configurations: {
+                combine: {inputsCount:2},
+                of1: { args: 'red' },
+                input1: vDom(['red', 'green', 'blue']),
+                of2: { args: 'square' },
+                input2: vDom(['square', 'circle']),
+                output:{ vDomMap: (data) => ({ innerText:  data }) }
+            }
+        },
+        views:[{
+            id:'View',
+            html: project.summaryHtml()
+        }],
+        canvas:{
+            annotations:[
+                 {
+                     selector: ({uid}) => ['input1','input2', 'output'].includes(uid),
+                     html: (elem) => elem.html()
+                 },
+                 {
+                     selector: ({uid}) => ['c', 'c1', 'c2'].includes(uid),
+                     html: (elem) => ({innerText: env.fv.attr$(elem.end$, (m) => m.data) })
+                 },
+                 {
+                     selector: ({uid}) => ['of1', 'of2'].includes(uid),
+                     html: (elem) => ({innerText: elem.configurationInstance.args })
+                 }
+            ]
+        }
+   })
 }
  `
  *     const url = '/applications/@youwol/vsf-snippet/latest?tab=dag&content='+encodeURIComponent(src)

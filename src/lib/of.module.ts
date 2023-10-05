@@ -7,31 +7,40 @@
  * <iframe id="iFrameExample" src="" width="100%" height="800px"></iframe>
  * <script>
  *    const src = `return async ({project, cell, env}) => {
-   project = await project.import('@youwol/vsf-rxjs', '@youwol/vsf-flux-view')
-   project = await project.parseDag([
-       '(of#of)>#c>(accView#view)',
-   ],{
-       of: { args: [1, 2, 3] , spread: true},
-       view: {
-           containerAttributes: { class:'rounded p-1 border', style:{marginTop:'15px'}},
-           vDomMap: (data) => ({ innerText: 'received: '+ data })
-       },
-       c: { transmissionDelay: 500 }
-   })
-   project = project.addHtml("View", project.summaryHtml())
-   project = project.addToCanvas({
-       selector: ({uid}) => uid == 'view',
-       view: (elem) => elem.html()
-   })
-   project = project.addToCanvas({
-       selector: ({uid}) => uid == 'of',
-       view: () => ({innerText:'1, 2, 3'})
-   })
-   project = project.addToCanvas({
-       selector: (elem) => elem.uid == 'c',
-       view: (c) => ({ innerText: env.fv.attr$( c.end$, ({data}) =>  data ) })
-   })
-   return project
+    return await project.with({
+        toolboxes: ['@youwol/vsf-rxjs', '@youwol/vsf-flux-view'],
+        flowchart: {
+            branches: ['(of#of)>#c>(accView#view)'],
+            configurations: {
+                of: { args: [1, 2, 3] , spread: true},
+                view: {
+                    containerAttributes: { class:'d-flex flex-column rounded p-1 border', style:{marginTop:'15px'}},
+                    vDomMap: (data) => ({ innerText: 'received: '+ data })
+                },
+                c: { transmissionDelay: 500 }
+            }
+        },
+        views:[{
+            id:'View',
+            html: project.summaryHtml()
+        }],
+        canvas: {
+            annotations: [
+                {
+                    selector: ({uid}) => uid == 'view',
+                    html: (elem) => elem.html()
+                },
+                {
+                    selector: ({uid}) => uid == 'of',
+                    html: () => ({innerText:'1, 2, 3'})
+                },
+                {
+                    selector: (elem) => elem.uid == 'c',
+                    html: (c) => ({ innerText: env.fv.attr$( c.end$, ({data}) =>  data ) })
+                }
+            ]
+        }
+    })
 }`
  *    const url = '/applications/@youwol/vsf-snippet/latest?tab=dag&content='+encodeURIComponent(src)
  *    document.getElementById('iFrameExample').setAttribute("src",url);

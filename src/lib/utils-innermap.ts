@@ -1,4 +1,4 @@
-import { map } from 'rxjs/operators'
+import { map, shareReplay } from 'rxjs/operators'
 import {
     Configurations,
     Deployers,
@@ -107,6 +107,8 @@ export function higherOrderOutputs<T extends Configurations.Schema>(policy) {
                         to: 'output$',
                     })
                 }),
+                // This may be optional at some point
+                shareReplay({ bufferSize: 1, refCount: true }),
             ),
             instancePool$: arg.state.instancePool$.pipe(
                 map((pool) => ({ data: pool, context: {} })),

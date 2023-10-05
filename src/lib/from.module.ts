@@ -16,33 +16,39 @@
  * <iframe id="iFrameExample" src="" width="100%" height="800px"></iframe>
  * <script>
  *      const src = `return async ({project, cell, env}) => {
-    project = await project.import('@youwol/vsf-rxjs', '@youwol/vsf-flux-view')\n
-    project = await project.parseDag(
-       '(from#from)>#c>(accView#view)'
-        ,
-        {   from: { input: ['foo', 'bar', 'baz', 'qux'] },
-            c: { transmissionDelay: 1000 },
-            view:{
-               vDomMap: (v) => ({innerText:  v})
-           },
-      },
-    )
-    project = project.addHtml("View", project.summaryHtml())
-    project = project.addToCanvas(
-      {
-          selector: ({uid}) => ['c'].includes(uid),
-          view: (elem) => ({innerText: env.fv.attr$(elem.end$, (m) => m.data) })
-      },
-      {
-           selector: ({uid}) => ['view'].includes(uid),
-           view: (elem) => elem.html()
-      },
-      {
-           selector: ({uid}) => ['from'].includes(uid),
-           view: (elem) => ({innerText: "'foo', 'bar', 'baz', 'qux'"})
-      },
-    )
-    return project
+    return await project.with({
+        toolboxes: ['@youwol/vsf-rxjs', '@youwol/vsf-flux-view'],
+        flowchart: {
+            branches: ['(from#from)>#c>(accView#view)'],
+            configurations: {
+                from: { input: ['foo', 'bar', 'baz', 'qux'] },
+                c: { transmissionDelay: 1000 },
+                view:{
+                    vDomMap: (v) => ({innerText:  v})
+                },
+            }
+        },
+        views: [{
+            id: 'View',
+            html: project.summaryHtml()
+        }],
+        canvas: {
+            annotations: [
+                {
+                    selector: ({uid}) => ['c'].includes(uid),
+                    html: (elem) => ({innerText: env.fv.attr$(elem.end$, (m) => m.data) })
+                },
+                {
+                    selector: ({uid}) => ['view'].includes(uid),
+                    html: (elem) => elem.html()
+                },
+                {
+                    selector: ({uid}) => ['from'].includes(uid),
+                    html: (elem) => ({innerText: "'foo', 'bar', 'baz', 'qux'"})
+                },
+            ]
+        }
+    })
 }
  `
  *     const url = '/applications/@youwol/vsf-snippet/latest?tab=dag&content='+encodeURIComponent(src)
