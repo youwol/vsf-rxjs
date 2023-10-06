@@ -66,7 +66,7 @@
  * </script>
  * @module
  */
-import { Modules, Macros } from '@youwol/vsf-core'
+import { Modules, Deployers } from '@youwol/vsf-core'
 import { concatMap } from 'rxjs/operators'
 import {
     higherOrderConfig,
@@ -84,14 +84,14 @@ export const outputs =
     higherOrderOutputs<typeof configuration.schema>(concatMap)
 
 export function module(fwdParams) {
-    const state = new Macros.InnerObservablesPool({
+    const state = new Deployers.InnerObservablesPool({
         parentUid: fwdParams.uid,
         environment: fwdParams.environment,
     })
     return new Modules.Implementation<
         typeof configuration.schema,
         typeof inputs,
-        Macros.InnerObservablesPool
+        Deployers.InnerObservablesPool
     >(
         {
             configuration,

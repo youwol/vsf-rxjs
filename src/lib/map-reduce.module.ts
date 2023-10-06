@@ -11,27 +11,21 @@
  * <script>
  *   const src = `return async ({project, cell, env}) => {
     return await project.with({
-        toolboxes: ['@youwol/vsf-rxjs', '@youwol/vsf-flux-view'],
-        macros: [{
-            typeId: 'times2Macro',
-            flowchart: {
-                branches: ['(map#times2)'],
-                configurations: { times2: { project: ({data,context}) => ({data:2*data, context}) } },
-            },
-            api: {
-                inputs:['0(#times2)'],
-                outputs: ['(#times2)0']
-            }
-        }],
+        toolboxes: ['@youwol/vsf-rxjs', '@youwol/vsf-flux-view', '@youwol/vsf-debug'],
         flowchart: {
             branches: ['(from#from)>#c>(mapReduce#times2)>>(accView#view)'],
             configurations: {
                 from: { input: [[1, 2, 3], [4, 5, 6]]},
                 times2: {
                     project: (message) => ({
-                        macroTypeId: 'times2Macro',
-                        inputSlot:0,
-                        outputSlot: 0,
+                        flowchart:{
+                            branches:['(map#times2)>>(console#log)'],
+                            configurations: {
+                                times2: { project: ({data,context}) => ({data:2*data, context}) }
+                            }
+                        },
+                        input:"0(#times2)",
+                        output: "(#times2)0",
                         message,
                         purgeOnDone: false
                     })
@@ -71,7 +65,7 @@
  * </script>
  * @module
  */
-import { Modules, Macros, Contracts, Configurations } from '@youwol/vsf-core'
+import { Modules, Contracts, Configurations, Deployers } from '@youwol/vsf-core'
 import { concatMap, map, mergeMap, reduce, switchMap } from 'rxjs/operators'
 import { from, Observable } from 'rxjs'
 import { higherOrderConfig } from './utils-innermap'
@@ -117,7 +111,7 @@ export const outputs = (
     arg: Modules.OutputMapperArg<
         typeof configuration.schema,
         typeof inputs,
-        Macros.InnerObservablesPool
+        Deployers.InnerObservablesPool
     >,
 ) => {
     const outerPolicy = policies[arg.configuration.outerPolicy]
@@ -158,14 +152,14 @@ export const outputs = (
 }
 
 export function module(fwdParams) {
-    const state = new Macros.InnerObservablesPool({
+    const state = new Deployers.InnerObservablesPool({
         parentUid: fwdParams.uid,
         environment: fwdParams.environment,
     })
     return new Modules.Implementation<
         typeof configuration.schema,
         typeof inputs,
-        Macros.InnerObservablesPool
+        Deployers.InnerObservablesPool
     >(
         {
             configuration,

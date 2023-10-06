@@ -4,7 +4,6 @@ import {
     Deployers,
     Modules,
     Contracts,
-    Macros,
     Immutable,
 } from '@youwol/vsf-core'
 import { Observable, of } from 'rxjs'
@@ -75,7 +74,7 @@ export const higherOrderConfig = {
                 message: Modules.ProcessingMessage,
             ):
                 | Observable<Modules.OutputMessage>
-                | Macros.MacroAsObservableSpec => of(message),
+                | Deployers.VsfInnerObservable => of(message),
         }),
     },
 }
@@ -92,7 +91,7 @@ export function higherOrderOutputs<T extends Configurations.Schema>(policy) {
         arg: Modules.OutputMapperArg<
             T,
             typeof inputs,
-            Macros.InnerObservablesPool
+            Deployers.InnerObservablesPool
         >,
     ) =>
         ({
