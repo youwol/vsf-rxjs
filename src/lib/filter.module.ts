@@ -14,7 +14,7 @@
  *      const src = `return async ({project, cell, env}) => {
     return await project.with({
         toolboxes: [ '@youwol/vsf-rxjs', '@youwol/vsf-debug'],
-        flowchart: {
+        workflow: {
             branches:['(timer#timer)>#c1>(filter#filter)>#c2>(console#log)'],
             configurations:{
                 filter: { predicate: ({data}) => data/2 == parseInt(data/2) },
@@ -24,7 +24,7 @@
             id:'View',
             html: project.summaryHtml()
         }],
-        canvas: {
+        flowchart: {
             annotations:[
                 {
                     selector: ({uid}) => ['c1', 'c2'].includes(uid),

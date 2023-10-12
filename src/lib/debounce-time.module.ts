@@ -23,7 +23,7 @@
     } \n
     return await project.with({
         toolboxes:['@youwol/vsf-rxjs', '@youwol/vsf-flux-view', '@youwol/vsf-debug'],
-        flowchart:{
+        workflow:{
             branches:['(of#of)>>(view#input)>#c1>(debounceTime#debounce)>#c2>(console#log)'],
             configurations:{
                 debounce: { dueTime: 500 },
@@ -52,7 +52,7 @@
             id:'View',
             html: project.summaryHtml()
         }],
-        canvas:{
+        flowchart:{
             annotations:[
                 {
                     selector: ({uid}) => ['input'].includes(uid),

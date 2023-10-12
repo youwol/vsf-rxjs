@@ -12,7 +12,7 @@
  *      const src = `return async ({project, cell, env}) => {
     return await project.with({
         toolboxes: ['@youwol/vsf-rxjs', '@youwol/vsf-debug'],
-        flowchart: {
+        workflow: {
             branches: ['(timer#timer)>#c1>(console#log)'],
             configurations: {
                 timer: { dueTime: 0, interval: 1000 },
@@ -22,7 +22,7 @@
             id:'View',
             html: project.summaryHtml()
         }],
-        canvas: {
+        flowchart: {
             annotations: [
                 {
                     selector: ({uid}) => ['c1'].includes(uid),

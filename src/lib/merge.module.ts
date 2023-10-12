@@ -13,7 +13,7 @@
  *      const src = `return async ({project, cell, env}) => {
     return await project.with({
         toolboxes: ['@youwol/vsf-rxjs', '@youwol/vsf-flux-view'],
-        flowchart: {
+        workflow: {
             branches: [
                 '(timer#timer1)>>(take#take1)>#c1>0(merge#merge)>#c3>(accView#view)',
                 '(timer#timer2)>>(delay#delay)>>(take#take2)>#c2>1(#merge)'
@@ -32,7 +32,7 @@
             id: 'View',
             html: project.summaryHtml()
         }],
-        canvas: {
+        flowchart: {
             annotations: [
                 {
                     selector: ({uid}) => ['c1', 'c2', 'c3'].includes(uid),

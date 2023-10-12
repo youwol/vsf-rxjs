@@ -12,13 +12,13 @@
  *   const src = `return async ({project, cell, env}) => {
     return await project.with({
         toolboxes: ['@youwol/vsf-rxjs', '@youwol/vsf-flux-view', '@youwol/vsf-debug'],
-        flowchart: {
+        workflow: {
             branches: ['(from#from)>#c>(mapReduce#times2)>>(accView#view)'],
             configurations: {
                 from: { input: [[1, 2, 3], [4, 5, 6]]},
                 times2: {
                     project: (message) => ({
-                        flowchart:{
+                        workflow:{
                             branches:['(map#times2)>>(console#log)'],
                             configurations: {
                                 times2: { project: ({data,context}) => ({data:2*data, context}) }
@@ -41,7 +41,7 @@
             id: 'View',
             html: project.summaryHtml()
         }],
-        canvas: {
+        flowchart: {
             annotations: [
                 {
                     selector: ({uid}) => uid == 'view',

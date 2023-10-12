@@ -15,7 +15,7 @@
    const ops = rxjs.operators
    return await project.with({
         toolboxes:['@youwol/vsf-rxjs', '@youwol/vsf-flux-view'],
-        flowchart:{
+        workflow:{
             branches:[
                 '(of#of1)>>(delay#delay0)>>0(merge#merge)>#c>(concatMap#concatMap)>>(accView#view)',
                 '(of#of3)>>(delay#delay1)>>1(#merge)',
@@ -47,7 +47,7 @@
             id:'View',
             html: project.summaryHtml()
         }],
-        canvas:{
+        flowchart:{
             annotations:[
                 {
                     selector: ({uid}) => ['c'].includes(uid),

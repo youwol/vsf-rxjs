@@ -50,7 +50,7 @@
    })
    return await project.with({
         toolboxes:['@youwol/vsf-rxjs', '@youwol/vsf-flux-view'],
-        flowchart:{
+        workflow:{
             branches: [
                 '(of#of1)>>(view#input1)>#c1>0(combineLatest#combine)>#c>(accView#output)',
                 '(of#of2)>>(view#input2)>#c2>1(#combine)'],
@@ -67,7 +67,7 @@
             id:'View',
             html: project.summaryHtml()
         }],
-        canvas:{
+        flowchart:{
             annotations:[
                  {
                      selector: ({uid}) => ['input1','input2', 'output'].includes(uid),
