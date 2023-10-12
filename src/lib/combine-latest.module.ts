@@ -14,7 +14,7 @@
  * New emission can be triggered by clicking on the labels `red`, `green`, `blue`, `square`, `circle` in the
  * DAG (or View) panels.
  *
- * <iframe id="iFrameExample" src="" width="100%" height="800px"></iframe>
+ * <iframe id="iFrameExample_combinelatest" src="" width="100%" height="800px"></iframe>
  * <script>
  *      const src = `return async ({project, cell, env}) => {
    const { ReplaySubject, operators } =  env.rxjs
@@ -87,7 +87,7 @@
 }
  `
  *     const url = '/applications/@youwol/vsf-snippet/latest?tab=dag&content='+encodeURIComponent(src)
- *     document.getElementById('iFrameExample').setAttribute("src",url);
+ *     document.getElementById('iFrameExample_combinelatest').setAttribute("src",url);
  * </script>
  * @module
  */

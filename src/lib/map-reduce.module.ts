@@ -7,7 +7,7 @@
  *
  * Below is an example illustrating the module's usage.
  *
- * <iframe id="iFrameExample" src="" width="100%" height="800px"></iframe>
+ * <iframe id="iFrameExample_map-reduce" src="" width="100%" height="800px"></iframe>
  * <script>
  *   const src = `return async ({project, cell, env}) => {
     return await project.with({
@@ -61,7 +61,7 @@
   }
  `
  *     const url = '/applications/@youwol/vsf-snippet/latest?tab=dag&content='+encodeURIComponent(src)
- *     document.getElementById('iFrameExample').setAttribute("src",url);
+ *     document.getElementById('iFrameExample_map-reduce').setAttribute("src",url);
  * </script>
  * @module
  */

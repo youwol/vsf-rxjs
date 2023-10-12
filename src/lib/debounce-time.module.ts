@@ -13,7 +13,7 @@
  * Below is an example illustrating the module's usage.
  * New emissions can be triggered by moving the mouse within the area with white borders in the `DAG` panel.
  *
- * <iframe id="iFrameExample" src="" width="100%" height="800px"></iframe>
+ * <iframe id="iFrameExample_debounce-time" src="" width="100%" height="800px"></iframe>
  * <script>
  *      const src = `return async ({project, cell, env}) => {
     const { ReplaySubject } =  env.rxjs \n
@@ -72,7 +72,7 @@
 }
  `
  *     const url = '/applications/@youwol/vsf-snippet/latest?tab=dag&content='+encodeURIComponent(src)
- *     document.getElementById('iFrameExample').setAttribute("src",url);
+ *     document.getElementById('iFrameExample_debounce-time').setAttribute("src",url);
  * </script>
  * @module
  */
