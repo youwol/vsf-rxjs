@@ -47,13 +47,14 @@
         ]
     },
     "dependencies": {
-        "@youwol/vsf-core": "^0.2.1",
+        "@youwol/vsf-core": "^0.2.3",
         "rxjs": "^6.5.5"
     },
-    "youwol": {
-        "cdnDependencies": {
-            "@youwol/vsf-core": "^0.2.1",
+    "webpm": {
+        "dependencies": {
+            "@youwol/vsf-core": "^0.2.3",
             "rxjs": "^6.5.5"
-        }
+        },
+        "aliases": []
     }
 }
