@@ -44,7 +44,7 @@
  * </script>
  * @module
  */
-import { Modules, Configurations, Contracts } from '@youwol/vsf-core'
+import { Modules, Contracts } from '@youwol/vsf-core'
 import { filter } from 'rxjs/operators'
 
 /**
@@ -65,7 +65,7 @@ export const configuration = {
          *
          * Default to `({data}) => data != undefined`
          */
-        predicate: new Configurations.JsCode({
+        predicate: Modules.jsCodeAttribute({
             value: (
                 message: Modules.ProcessingMessage,
                 // eslint-disable-next-line unused-imports/no-unused-vars -- for documentation purpose

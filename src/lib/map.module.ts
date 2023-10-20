@@ -43,7 +43,7 @@
  * </script>
  * @module
  */
-import { Modules, Configurations, Contracts } from '@youwol/vsf-core'
+import { Modules, Contracts } from '@youwol/vsf-core'
 import { map } from 'rxjs/operators'
 
 /**
@@ -63,7 +63,7 @@ export const configuration = {
          *
          * Default to `(message) => message`.
          */
-        project: new Configurations.JsCode({
+        project: Modules.jsCodeAttribute({
             value: (
                 message: Modules.ProcessingMessage,
                 // eslint-disable-next-line unused-imports/no-unused-vars -- for documentation purposes

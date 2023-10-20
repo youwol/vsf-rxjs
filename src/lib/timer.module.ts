@@ -42,7 +42,7 @@
  * </script>
  * @module
  */
-import { Modules, Configurations } from '@youwol/vsf-core'
+import { Modules } from '@youwol/vsf-core'
 import { timer } from 'rxjs'
 import { map } from 'rxjs/operators'
 
@@ -62,16 +62,15 @@ export const configuration = {
         /**
          * The amount of time in milliseconds to wait before emitting.
          */
-        dueTime: new Configurations.Float({
-            value: 0,
-        }),
+        dueTime: Modules.floatAttribute({ value: 0 }, { override: 'final' }),
         /**
          * The delay between each value emitted in the interval.
          * Passing a negative number here will result in immediate completion after the first value is emitted.
          */
-        interval: new Configurations.Float({
-            value: 1000,
-        }),
+        interval: Modules.floatAttribute(
+            { value: 1000 },
+            { override: 'final' },
+        ),
     },
 }
 

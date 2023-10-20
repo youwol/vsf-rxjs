@@ -45,7 +45,7 @@
  * </script>
  * @module
  */
-import { Modules, Configurations, Contracts } from '@youwol/vsf-core'
+import { Modules, Contracts } from '@youwol/vsf-core'
 import { delay } from 'rxjs/operators'
 
 /**
@@ -63,9 +63,7 @@ export const configuration = {
          *
          * Default to `0`.
          */
-        due: new Configurations.Float({
-            value: 0,
-        }),
+        due: Modules.floatAttribute({ value: 0 }, { override: 'final' }),
     },
 }
 

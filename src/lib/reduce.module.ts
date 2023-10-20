@@ -58,7 +58,7 @@
  * </script>
  * @module
  */
-import { Modules, Configurations, Contracts } from '@youwol/vsf-core'
+import { Modules, Contracts } from '@youwol/vsf-core'
 import { map, reduce } from 'rxjs/operators'
 
 /**
@@ -79,21 +79,30 @@ export const configuration = {
          *
          * Default to `[]`.
          */
-        seed: new Configurations.Any({
-            value: [],
-        }),
+        seed: Modules.anyAttribute(
+            {
+                value: [],
+            },
+            { override: 'final' },
+        ),
         /**
          * The accumulator function called on each source value.
          *
          * Default to `(acc, {data}) => Array.isArray(acc) ? [...acc, data] : [data]`
          */
-        accumulator: new Configurations.JsCode({
-            value: <V, A>(acc: A, message: Modules.ProcessingMessage<V>): A => {
-                return Array.isArray(acc)
-                    ? ([...acc, message.data] as unknown as A)
-                    : ([message.data] as unknown as A)
+        accumulator: Modules.jsCodeAttribute(
+            {
+                value: <V, A>(
+                    acc: A,
+                    message: Modules.ProcessingMessage<V>,
+                ): A => {
+                    return Array.isArray(acc)
+                        ? ([...acc, message.data] as unknown as A)
+                        : ([message.data] as unknown as A)
+                },
             },
-        }),
+            { override: 'final' },
+        ),
     },
 }
 

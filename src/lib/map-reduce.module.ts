@@ -65,7 +65,7 @@
  * </script>
  * @module
  */
-import { Modules, Contracts, Configurations, Deployers } from '@youwol/vsf-core'
+import { Modules, Contracts, Deployers } from '@youwol/vsf-core'
 import { concatMap, map, mergeMap, reduce, switchMap } from 'rxjs/operators'
 import { from, Observable } from 'rxjs'
 import { higherOrderConfig } from './utils-innermap'
@@ -78,16 +78,18 @@ export const configuration = {
         /**
          * The outer policy used to combine the result of the reduce from incoming arrays (e.g. switch, merge, etc).
          */
-        outerPolicy: new Configurations.StringLiteral<MapReducePolicy>({
-            value: 'switch',
-        }),
+        outerPolicy: Modules.stringLiteralAttribute(
+            { value: 'switch' as MapReducePolicy },
+            { override: 'final' },
+        ),
         /**
          * The inner policy used to combined= the result of the map from individual items of incoming arrays
          * (e.g. switch, merge, etc).
          */
-        innerPolicy: new Configurations.StringLiteral<MapReducePolicy>({
-            value: 'merge',
-        }),
+        innerPolicy: Modules.stringLiteralAttribute(
+            { value: 'merge' as MapReducePolicy },
+            { override: 'final' },
+        ),
     },
 }
 

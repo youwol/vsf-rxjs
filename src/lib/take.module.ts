@@ -50,7 +50,7 @@
  * </script>
  * @module
  */
-import { Modules, Configurations, Contracts } from '@youwol/vsf-core'
+import { Modules, Contracts } from '@youwol/vsf-core'
 import { take } from 'rxjs/operators'
 
 /**
@@ -67,9 +67,7 @@ export const configuration = {
         /**
          * The maximum number of next values to emit.
          */
-        count: new Configurations.Integer({
-            value: 1,
-        }),
+        count: Modules.integerAttribute({ value: 1 }, { override: 'final' }),
     },
 }
 

@@ -56,7 +56,7 @@
  * </script>
  * @module
  */
-import { Modules, Configurations } from '@youwol/vsf-core'
+import { Modules } from '@youwol/vsf-core'
 import { from, ObservableInput } from 'rxjs'
 import { map } from 'rxjs/operators'
 
@@ -91,9 +91,10 @@ export const configuration = {
          *
          * Default to `[{}]`
          */
-        input: new Configurations.CustomAttribute<ObservableInput<unknown>>({
-            value: [{}],
-        }),
+        input: Modules.customAttribute<ObservableInput<unknown>, 'final'>(
+            { value: [{}] },
+            { override: 'final' },
+        ),
     },
 }
 

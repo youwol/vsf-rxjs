@@ -76,7 +76,7 @@
  * </script>
  * @module
  */
-import { Modules, Configurations, Contracts } from '@youwol/vsf-core'
+import { Modules, Contracts } from '@youwol/vsf-core'
 import { debounceTime } from 'rxjs/operators'
 
 /**
@@ -94,9 +94,12 @@ export const configuration = {
          *
          * Default to `0`.
          */
-        dueTime: new Configurations.Float({
-            value: 0,
-        }),
+        dueTime: Modules.floatAttribute(
+            {
+                value: 0,
+            },
+            { override: 'final' },
+        ),
     },
 }
 

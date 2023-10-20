@@ -91,7 +91,7 @@
  * </script>
  * @module
  */
-import { Modules, Configurations } from '@youwol/vsf-core'
+import { Modules } from '@youwol/vsf-core'
 import { map } from 'rxjs/operators'
 import { createVariableInputs } from './common'
 import { combineLatest } from 'rxjs'
@@ -112,9 +112,10 @@ export const configuration = {
          *
          * Default to `2`.
          */
-        inputsCount: new Configurations.Integer({
-            value: 2,
-        }),
+        inputsCount: Modules.integerAttribute(
+            { value: 2 },
+            { override: 'final' },
+        ),
     },
 }
 

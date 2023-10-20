@@ -69,7 +69,7 @@ export const higherOrderConfig = {
          *
          * Default to `(message) => of(message)`.
          */
-        project: new Configurations.JsCode({
+        project: Modules.jsCodeAttribute({
             value: (
                 message: Modules.ProcessingMessage,
             ):
@@ -127,14 +127,14 @@ export type Policy = 'switch' | 'merge' | 'concat'
 export const partialConfiguration = {
     schema: {
         innerMacro: {
-            macroTypeId: new Configurations.String({ value: '' }),
+            macroTypeId: Modules.stringAttribute({ value: '' }),
             configuration: {
-                workersPoolId: new Configurations.String({ value: '' }),
+                workersPoolId: Modules.stringAttribute({ value: '' }),
             },
-            inputIndex: new Configurations.Integer({ value: 0 }),
-            outputIndex: new Configurations.Integer({ value: 0 }),
+            inputIndex: Modules.integerAttribute({ value: 0 }),
+            outputIndex: Modules.integerAttribute({ value: 0 }),
         },
-        purgeOnTerminated: new Configurations.Boolean({ value: true }),
+        purgeOnTerminated: Modules.booleanAttribute({ value: true }),
     },
 }
 

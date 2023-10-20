@@ -10,7 +10,7 @@
  *
  * @module
  */
-import { Modules, Configurations, Contracts } from '@youwol/vsf-core'
+import { Modules, Contracts } from '@youwol/vsf-core'
 import { shareReplay } from 'rxjs/operators'
 
 export const configuration = {
@@ -18,12 +18,18 @@ export const configuration = {
         /**
          * Size of the buffer.
          */
-        bufferSize: new Configurations.Integer({ value: undefined }),
+        bufferSize: Modules.integerAttribute(
+            { value: undefined },
+            { override: 'final' },
+        ),
 
         /**
          *  If true, unsubscribe the source when the reference counter drops to zero.
          */
-        refCount: new Configurations.Boolean({ value: true }),
+        refCount: Modules.booleanAttribute(
+            { value: true },
+            { override: 'final' },
+        ),
     },
 }
 
