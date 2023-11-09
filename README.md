@@ -1,6 +1,6 @@
 # @youwol/vsf-rxjs
 
-
+Expose various observables & operators from RxJS.
 
 This library is part of the hybrid cloud/local ecosystem
 [YouWol](https://platform.youwol.com/applications/@youwol/platform/latest).
