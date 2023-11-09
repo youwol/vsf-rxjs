@@ -55,7 +55,7 @@ export const setup = {
     name:'@youwol/vsf-rxjs',
         assetId:'QHlvdXdvbC92c2Ytcnhqcw==',
     version:'0.2.3',
-    shortDescription:"",
+    shortDescription:"Expose various observables & operators from RxJS.",
     developerDocumentation:'https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/vsf-rxjs&tab=doc',
     npmPackage:'https://www.npmjs.com/package/@youwol/vsf-rxjs',
     sourceGithub:'https://github.com/youwol/vsf-rxjs',

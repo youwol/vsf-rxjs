@@ -1,6 +1,6 @@
 {
     "name": "@youwol/vsf-rxjs",
-    "description": "",
+    "description": "Expose various observables & operators from RxJS.",
     "version": "0.2.3",
     "author": "greinisch@youwol.com",
     "homepage": "https://github.com/youwol/vsf-rxjs#README.md",
