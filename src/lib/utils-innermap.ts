@@ -112,7 +112,7 @@ export function higherOrderOutputs<T extends Configurations.Schema>(policy) {
             instancePool$: arg.state.instancePool$.pipe(
                 map((pool) => ({ data: pool, context: {} })),
             ),
-        } as {
+        }) as {
             instancePool$: Observable<{
                 data: Deployers.InstancePool
                 context: Record<string, never>
@@ -121,7 +121,7 @@ export function higherOrderOutputs<T extends Configurations.Schema>(policy) {
                 | Modules.OutputMessage<unknown>
                 | Immutable<Modules.OutputMessage<unknown>>
             >
-        })
+        }
 }
 export type Policy = 'switch' | 'merge' | 'concat'
 export const partialConfiguration = {
