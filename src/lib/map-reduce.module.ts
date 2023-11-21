@@ -67,8 +67,8 @@
  */
 import { Modules, Contracts, Deployers } from '@youwol/vsf-core'
 import { concatMap, map, mergeMap, reduce, switchMap } from 'rxjs/operators'
-import { from, Observable } from 'rxjs'
-import { higherOrderConfig } from './utils-innermap'
+import { from } from 'rxjs'
+import { higherOrderConfig, implementObservableTrait } from './utils-innermap'
 
 export type MapReducePolicy = 'switch' | 'merge' | 'concat'
 
@@ -130,7 +130,7 @@ export const outputs = (
                     })),
                     innerPolicy((message) => {
                         const projected = message.configuration.project(message)
-                        if (projected instanceof Observable) {
+                        if (implementObservableTrait(projected)) {
                             return projected
                         }
                         return arg.state.inner$(projected, {

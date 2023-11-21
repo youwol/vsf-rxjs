@@ -86,6 +86,10 @@ export const higherOrderInputs = {
     },
 }
 
+export function implementObservableTrait(d: unknown): d is Observable<unknown> {
+    return (d as Observable<unknown>).subscribe !== undefined
+}
+
 export function higherOrderOutputs<T extends Configurations.Schema>(policy) {
     return (
         arg: Modules.OutputMapperArg<
@@ -98,7 +102,7 @@ export function higherOrderOutputs<T extends Configurations.Schema>(policy) {
             output$: arg.inputs.input$.pipe(
                 policy((message) => {
                     const projected = message.configuration.project(message)
-                    if (projected instanceof Observable) {
+                    if (implementObservableTrait(projected)) {
                         return projected
                     }
                     return arg.state.inner$(projected, {
