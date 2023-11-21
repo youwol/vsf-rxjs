@@ -54,7 +54,7 @@ const entries = {
 export const setup = {
     name:'@youwol/vsf-rxjs',
         assetId:'QHlvdXdvbC92c2Ytcnhqcw==',
-    version:'0.2.4-wip',
+    version:'0.2.4',
     shortDescription:"Expose various observables & operators from RxJS.",
     developerDocumentation:'https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/vsf-rxjs&tab=doc',
     npmPackage:'https://www.npmjs.com/package/@youwol/vsf-rxjs',
@@ -100,7 +100,7 @@ export const setup = {
         const parameters = installParameters || {}
         const scripts = [
             ...(parameters.scripts || []),
-            `@youwol/vsf-rxjs#0.2.4-wip~dist/@youwol/vsf-rxjs/${entry.name}.js`
+            `@youwol/vsf-rxjs#0.2.4~dist/@youwol/vsf-rxjs/${entry.name}.js`
         ]
         const modules = [
             ...(parameters.modules || []),
