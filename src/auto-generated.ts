@@ -54,13 +54,13 @@ const entries = {
 export const setup = {
     name:'@youwol/vsf-rxjs',
         assetId:'QHlvdXdvbC92c2Ytcnhqcw==',
-    version:'0.2.4',
+    version:'0.3.0-wip',
     shortDescription:"Expose various observables & operators from RxJS.",
     developerDocumentation:'https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/vsf-rxjs&tab=doc',
     npmPackage:'https://www.npmjs.com/package/@youwol/vsf-rxjs',
     sourceGithub:'https://github.com/youwol/vsf-rxjs',
     userGuide:'',
-    apiVersion:'02',
+    apiVersion:'03',
     runTimeDependencies,
     externals,
     exportedSymbols,
@@ -85,7 +85,7 @@ export const setup = {
             modules,
             scripts,
         }).then(() => {
-            return window[`@youwol/vsf-rxjs_APIv02`]
+            return window[`@youwol/vsf-rxjs_APIv03`]
         })
     },
     installAuxiliaryModule: ({name, cdnClient, installParameters}:{
@@ -100,7 +100,7 @@ export const setup = {
         const parameters = installParameters || {}
         const scripts = [
             ...(parameters.scripts || []),
-            `@youwol/vsf-rxjs#0.2.4~dist/@youwol/vsf-rxjs/${entry.name}.js`
+            `@youwol/vsf-rxjs#0.3.0-wip~dist/@youwol/vsf-rxjs/${entry.name}.js`
         ]
         const modules = [
             ...(parameters.modules || []),
@@ -111,7 +111,7 @@ export const setup = {
             modules,
             scripts,
         }).then(() => {
-            return window[`@youwol/vsf-rxjs/${entry.name}_APIv02`]
+            return window[`@youwol/vsf-rxjs/${entry.name}_APIv03`]
         })
     },
     getCdnDependencies(name?: string){
