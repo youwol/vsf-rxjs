@@ -120,10 +120,11 @@ export const outputs = (
     const innerPolicy = policies[arg.configuration.innerPolicy]
     return {
         output$: arg.inputs.input$.pipe(
-            outerPolicy(({ data, configuration, context, scope }) => {
+            outerPolicy(({ data, configuration, context, logger, scope }) => {
                 return from(data).pipe(
                     map((d) => ({
                         data: d,
+                        logger,
                         configuration,
                         context,
                         scope,
